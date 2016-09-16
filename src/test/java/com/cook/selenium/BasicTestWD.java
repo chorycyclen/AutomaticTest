@@ -4,7 +4,6 @@ import com.cook.selenium.utility.LoginLanguage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
@@ -16,23 +15,24 @@ import java.util.concurrent.TimeUnit;
 /**
  * 由 xin 创建于 2016/9/15.
  */
-public class BasicTest {
+public class BasicTestWD extends DriverFactory {
 
     @Test
-    public void adminLoginForEnglishWithoutKeepLogin() {
+    public void adminLoginForEnglishWithoutKeepLogin() throws Exception {
         ran_zhiLogin("admin", "admin", LoginLanguage.ENG, Boolean.FALSE);
     }
 
     @Test
-    public void adminLoginForCHTWithoutKeepLogin() {
+    public void adminLoginForCHTWithoutKeepLogin() throws Exception {
         ran_zhiLogin("admin", "admin", LoginLanguage.CHT, Boolean.FALSE);
     }
 
     private void ran_zhiLogin(final String account, final String password,
-                              final LoginLanguage language, Boolean keepLogin) {
-        WebDriver driver = new FirefoxDriver();
+                              final LoginLanguage language, Boolean keepLogin) throws Exception {
+        WebDriver driver = DriverFactory.getDriver();
         driver.get("http://www.linserver.com/ranzhi/www");
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        System.out.println("当前网页标题：" + driver.getTitle());
         WebElement element = driver.findElement(By.tagName("button"));
         element.click();
         List<WebElement> lanList = driver.findElements(By.tagName("li"));
@@ -55,6 +55,7 @@ public class BasicTest {
                 return input.getTitle().startsWith(language.getNextWebPageTitle());
             }
         });
+        System.out.println("当前网页标题：" + driver.getTitle());
         element = driver.findElement(By.name("account"));
         element.clear();
         element.sendKeys(account);
@@ -86,6 +87,7 @@ public class BasicTest {
                 return input.getTitle().startsWith(expectedTitle);
             }
         });
-        driver.quit();
+        System.out.println("当前网页标题：" + driver.getTitle());
+        //driver.quit();
     }
 }
