@@ -62,7 +62,9 @@ class WebDriverThread {
         String browserSetting;
         try {
             browserSetting = System.getProperty("browser").toUpperCase();
+            
         } catch (Exception e) {
+
             browserSetting = defaultDriverType.toString();
         }
         return browserSetting;

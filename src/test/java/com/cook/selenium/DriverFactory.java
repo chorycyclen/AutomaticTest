@@ -1,15 +1,18 @@
 package com.cook.selenium;
 
 
+import com.cook.selenium.listeners.ScreenshotListener;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Listeners;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Listeners(ScreenshotListener.class)
 public class DriverFactory {
 
     private static List<WebDriverThread> webDriverThreadPool =
