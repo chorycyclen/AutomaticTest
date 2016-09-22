@@ -1,17 +1,13 @@
 package com.cook.selenium.page_objects;
 
 import com.cook.selenium.DriverFactory;
+import com.cook.selenium.utility.AdditionalConditions;
 import com.cook.selenium.utility.LoginLanguage;
-import com.google.common.base.Function;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-
-import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * 然知登陆页面
@@ -48,7 +44,6 @@ public class LoginPage {
 
     public LoginPage selectLanguage(LoginLanguage language) throws Exception {
         languageSwitchLocator.click();
-        String currentTitle=DriverFactory.getDriver().getTitle();
         switch (language) {
             case ZH_CN:
                 simplifiedChineseLocator.click();
@@ -62,7 +57,9 @@ public class LoginPage {
             default:
                 simplifiedChineseLocator.click();
         }
-        return this;
+        (new WebDriverWait(DriverFactory.getDriver(),15))
+                .until(AdditionalConditions.jQueryAJAXCallsHaveCompleted());
+        return new LoginPage();
     }
 
     public LoginPage enterAccount(String account) {
@@ -87,31 +84,4 @@ public class LoginPage {
         }
         return this;
     }
-
-    public void login(String account, String password, LoginLanguage language, Boolean keepLogin) {
-        languageSwitchLocator.click();
-        switch (language) {
-            case ZH_CN:
-                simplifiedChineseLocator.click();
-                break;
-            case CHT:
-                traditionalChineseLocator.click();
-                break;
-            case ENG:
-                englishLocator.click();
-                break;
-            default:
-                simplifiedChineseLocator.click();
-        }
-        accountLocator.clear();
-        accountLocator.sendKeys(account);
-        passwordLocator.clear();
-        passwordLocator.sendKeys(password);
-        if (keepLogin) {
-            keepLoginCheckBoxLocator.click();
-        }
-        loginLocator.click();
-
-    }
-
 }

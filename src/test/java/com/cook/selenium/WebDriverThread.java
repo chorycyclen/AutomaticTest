@@ -2,9 +2,13 @@ package com.cook.selenium;
 
 
 import com.cook.selenium.config.DriverType;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.File;
+import java.io.FileReader;
 import java.net.MalformedURLException;
 
 class WebDriverThread {
@@ -59,15 +63,34 @@ class WebDriverThread {
     }
 
     private String getBrowserSetting() {
-        String browserSetting;
-        try {
+        String browserSetting = "";
+        /*try {
             browserSetting = System.getProperty("browser").toUpperCase();
-            
+
+        }*/
+        try {
+            browserSetting = readProperty().toUpperCase();
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        } finally {
+            if (browserSetting.equals("")) {
+                browserSetting = defaultDriverType.toString().toUpperCase();
+            }
+        }
+
+            /*
         } catch (Exception e) {
 
             browserSetting = defaultDriverType.toString();
-        }
+        }*/
         return browserSetting;
+    }
+
+    private static String readProperty() throws Exception {
+        MavenXpp3Reader reader = new MavenXpp3Reader();
+        String myPom = System.getProperty("user.dir") + File.separator + "pom.xml";
+        Model model = reader.read(new FileReader(myPom));
+        return model.getProperties().getProperty("browser").toUpperCase();
     }
 
     public void quitDriver() {
