@@ -1,12 +1,13 @@
 package com.cook.selenium.page_objects;
 
 import com.cook.selenium.DriverFactory;
-import com.cook.selenium.utility.AdditionalConditions;
 import com.cook.selenium.utility.LoginLanguage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
@@ -57,8 +58,8 @@ public class LoginPage {
             default:
                 simplifiedChineseLocator.click();
         }
-        (new WebDriverWait(DriverFactory.getDriver(),15))
-                .until(AdditionalConditions.jQueryAJAXCallsHaveCompleted());
+        (new WebDriverWait(DriverFactory.getDriver(),5,100))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.name("account")));
         return new LoginPage();
     }
 
@@ -80,7 +81,13 @@ public class LoginPage {
 
     public LoginPage checkKeepLogin(Boolean keepLogin) {
         if (keepLogin) {
-            keepLoginCheckBoxLocator.click();
+            if (!keepLoginCheckBoxLocator.isSelected()) {
+                keepLoginCheckBoxLocator.click();
+            }
+        }else {
+            if (keepLoginCheckBoxLocator.isSelected()) {
+                keepLoginCheckBoxLocator.click();
+            }
         }
         return this;
     }

@@ -7,7 +7,6 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.io.File;
 import java.io.FileReader;
 import java.net.MalformedURLException;
 
@@ -22,7 +21,7 @@ class WebDriverThread {
     private final String operatingSystem = System.getProperty("os.name").toUpperCase();
     private final String systemArchitecture = System.getProperty("os.arch").toUpperCase();
 
-    public WebDriver getWebDriver() throws Exception {
+    WebDriver getWebDriver() throws Exception {
         if (webDriver == null) {
             selectedDriverType = determineEffectiveDriverType();
             DesiredCapabilities desiredCapabilities = selectedDriverType.getDesiredCapabilities();
@@ -64,10 +63,6 @@ class WebDriverThread {
 
     private String getBrowserSetting() {
         String browserSetting = "";
-        /*try {
-            browserSetting = System.getProperty("browser").toUpperCase();
-
-        }*/
         try {
             browserSetting = readProperty().toUpperCase();
         } catch (Exception e) {
@@ -77,23 +72,17 @@ class WebDriverThread {
                 browserSetting = defaultDriverType.toString().toUpperCase();
             }
         }
-
-            /*
-        } catch (Exception e) {
-
-            browserSetting = defaultDriverType.toString();
-        }*/
         return browserSetting;
     }
 
     private static String readProperty() throws Exception {
         MavenXpp3Reader reader = new MavenXpp3Reader();
-        String myPom = System.getProperty("user.dir") + File.separator + "pom.xml";
+        String myPom = WebDriverThread.class.getResource("/").getPath() + "../../pom.xml";
         Model model = reader.read(new FileReader(myPom));
         return model.getProperties().getProperty("browser").toUpperCase();
     }
 
-    public void quitDriver() {
+    void quitDriver() {
         if (webDriver != null) {
             webDriver.quit();
             webDriver = null;

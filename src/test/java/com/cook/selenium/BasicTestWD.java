@@ -16,6 +16,7 @@ public class BasicTestWD extends DriverFactory {
         loginPage.selectLanguage(LoginLanguage.ENG)
                 .enterAccount("admin")
                 .enterPassword("admin")
+                .checkKeepLogin(true)
                 .clickLogin();
     }
 
@@ -26,6 +27,7 @@ public class BasicTestWD extends DriverFactory {
         loginPage.selectLanguage(LoginLanguage.ZH_CN)
                 .enterAccount("admin")
                 .enterPassword("admin")
+                .checkKeepLogin(false)
                 .clickLogin();
     }
 }
