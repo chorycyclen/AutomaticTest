@@ -4,11 +4,14 @@ package com.cook.selenium;
 import com.cook.selenium.config.DriverType;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.FileReader;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 class WebDriverThread {
 
@@ -20,6 +23,7 @@ class WebDriverThread {
     private final String browser = getBrowserSetting();
     private final String operatingSystem = System.getProperty("os.name").toUpperCase();
     private final String systemArchitecture = System.getProperty("os.arch").toUpperCase();
+    private final boolean isUseRemoteWebDriver = Boolean.getBoolean("remoteDriver");
 
     WebDriver getWebDriver() throws Exception {
         if (webDriver == null) {
@@ -58,7 +62,22 @@ class WebDriverThread {
         System.out.println("当前系统架构为：" + systemArchitecture);
         System.out.println("当前选择浏览器：" + selectedDriverType);
         System.out.println(" ");
-        webDriver = selectedDriverType.getWebDriverObject(desiredCapabilities);
+        if (isUseRemoteWebDriver) {
+            URL seleniumGridURL = new URL(System.getProperty("gridURL"));
+            String desiredBrowserVersion = System.getProperty("desiredBrowserVersion");
+            String desiredPlatform = System.getProperty("desiredPlatform");
+            if (desiredPlatform != null && desiredPlatform.length() > 0) {
+                desiredCapabilities.setPlatform(Platform.valueOf(desiredPlatform.toUpperCase()));
+            }
+
+            if (desiredBrowserVersion != null && desiredBrowserVersion.length() > 0) {
+                desiredCapabilities.setVersion(desiredBrowserVersion);
+            }
+
+            webDriver = new RemoteWebDriver(seleniumGridURL, desiredCapabilities);
+        } else {
+            webDriver = selectedDriverType.getWebDriverObject(desiredCapabilities);
+        }
     }
 
     private String getBrowserSetting() {

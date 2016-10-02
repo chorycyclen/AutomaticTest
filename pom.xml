@@ -20,6 +20,11 @@
         <!-- Configurable variables -->
         <threads>1</threads>
         <browser>opera</browser>
+        <overwrite.binaries>false</overwrite.binaries>
+        <remote>false</remote>
+        <seleniumGridURL/>
+        <platform/>
+        <browserVersion/>
     </properties>
 
     <repositories>
@@ -73,6 +78,10 @@
                             <threadCount>${threads}</threadCount>
                             <systemProperties>
                                 <browser>${browser}</browser>
+                                <remoteDriver>${remote}</remoteDriver>
+                                <gridURL>${seleniumGridURL}</gridURL>
+                                <desirePlaform>${platform}</desirePlaform>
+                                <desiredBrowserVersion>${browserVersion}</desiredBrowserVersion>
                             </systemProperties>
                             <includes>
                                 <include>**/*WD.java</include>
