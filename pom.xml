@@ -19,7 +19,7 @@
         <selenium.version>3.0.0-beta2</selenium.version>
         <!-- Configurable variables -->
         <threads>1</threads>
-        <browser>opera</browser>
+        <browser>chrome</browser>
         <overwrite.binaries>false</overwrite.binaries>
         <remote>false</remote>
         <seleniumGridURL/>
