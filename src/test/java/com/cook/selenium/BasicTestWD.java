@@ -14,11 +14,9 @@ public class BasicTestWD extends DriverFactory {
 
     @Test(alwaysRun = true,dataProvider = "test1",
             dataProviderClass = CSVDataProvider.class,
-            invocationCount = 2,
             description = "选择英文页面登陆然知并且不保持登陆")
     public void adminLoginForEnglishWithoutKeepLogin(String account,String password) throws Exception {
         getDriver().get("http://www.linserver.com/ranzhi/www");
-        getDriver().manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         LoginPage loginPage = new LoginPage();
         loginPage.selectLanguage(LoginLanguage.ENG)
                 .enterAccount(account)
@@ -27,13 +25,15 @@ public class BasicTestWD extends DriverFactory {
                 .clickLogin();
     }
 
-    @Test(enabled = false,description = "选择繁体中文登陆然知并不保持登录")
-    public void adminLoginForCHTWithoutKeepLogin() throws Exception {
+    @Test(alwaysRun = true,dataProvider = "test1",
+            dataProviderClass = CSVDataProvider.class,
+            description = "选择繁体中文登陆然知并不保持登录")
+    public void adminLoginForCHTWithoutKeepLogin(String account,String password) throws Exception {
         getDriver().get("http://www.linserver.com/ranzhi/www");
         LoginPage loginPage = new LoginPage();
         loginPage.selectLanguage(LoginLanguage.CHT)
-                .enterAccount("admin")
-                .enterPassword("admin")
+                .enterAccount(account)
+                .enterPassword(password)
                 .checkKeepLogin(false)
                 .clickLogin();
     }
