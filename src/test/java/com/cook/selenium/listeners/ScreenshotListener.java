@@ -11,6 +11,8 @@ import org.testng.TestListenerAdapter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ScreenshotListener extends TestListenerAdapter {
 
@@ -49,7 +51,10 @@ public class ScreenshotListener extends TestListenerAdapter {
         try {
             WebDriver driver = DriverFactory.getDriver();
             String screenshotDirectory = System.getProperty("screenshotDirectory", "target/screenshots");
-            String screenshotAbsolutePath = screenshotDirectory + File.separator + System.currentTimeMillis() + "_" + failingTest.getName() + ".png";
+            long currentTime = System.currentTimeMillis();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy年-MM月dd日-HH时mm分ss秒");
+            Date date = new Date(currentTime);
+            String screenshotAbsolutePath = screenshotDirectory + File.separator + formatter.format(date) + "_" + failingTest.getName() + ".png";
             File screenshot = new File(screenshotAbsolutePath);
             if (createFile(screenshot)) {
                 try {

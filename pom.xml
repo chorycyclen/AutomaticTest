@@ -12,6 +12,14 @@
     <description>A basic Selenium POM file</description>
     <url>http://127.0.0.1</url>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Central</name>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+    </repositories>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -27,13 +35,6 @@
         <browserVersion/>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>maven</id>
-            <name>Slowly official site</name>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-    </repositories>
 
     <profiles>
         <profile>
@@ -53,6 +54,7 @@
                     <groupId>org.seleniumhq.selenium</groupId>
                     <artifactId>selenium-remote-driver</artifactId>
                     <version>${selenium.version}</version>
+                    <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.testng</groupId>
@@ -64,7 +66,15 @@
                     <groupId>org.apache.maven</groupId>
                     <artifactId>maven-model</artifactId>
                     <version>3.3.9</version>
+                    <scope>test</scope>
                 </dependency>
+                <dependency>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-csv</artifactId>
+                    <version>1.4</version>
+                    <scope>test</scope>
+                </dependency>
+
             </dependencies>
 
             <build>

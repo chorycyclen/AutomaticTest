@@ -1,4 +1,4 @@
-package com.cook.selenium.utility;
+package com.cook.selenium.dataproviders;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
