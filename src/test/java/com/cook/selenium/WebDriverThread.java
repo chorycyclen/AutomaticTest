@@ -18,7 +18,7 @@ class WebDriverThread {
     private WebDriver webDriver;
     private DriverType selectedDriverType;
 
-    private final DriverType defaultDriverType = DriverType.FIREFOX;
+    private final DriverType defaultDriverType = DriverType.OPERA;
     //private final String browser = System.getProperty("browser").toUpperCase();
     private final String browser = getBrowserSetting();
     private final String operatingSystem = System.getProperty("os.name").toUpperCase();

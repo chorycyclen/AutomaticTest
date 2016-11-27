@@ -11,7 +11,7 @@ import java.util.Iterator;
 
 public class CSVDataProvider {
 
-    @DataProvider(name = "test1",parallel = true)
+    @DataProvider(name = "test1")
     public static Iterator<Object[]> createData(Method method) throws Exception {
         //打印方法名
         ArrayList<Object[]> data = new ArrayList<Object[]>();
